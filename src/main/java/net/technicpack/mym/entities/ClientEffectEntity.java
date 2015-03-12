@@ -33,9 +33,9 @@ public class ClientEffectEntity extends Entity {
     public void onUpdate() {
         if (worldObj.isRemote) {
             for (int i = 0; i < 40; i++) {
-                worldObj.spawnParticle("reddust", posX + (this.rand.nextDouble() - 0.5D) * 3,
+                worldObj.spawnParticle("reddust", posX + (this.rand.nextDouble() - 0.5D) * 2,
                         posY + this.rand.nextDouble() * 2,
-                        posZ + (this.rand.nextDouble() - 0.5D) * 3,
+                        posZ + (this.rand.nextDouble() - 0.5D) * 2,
                         0,0,0);
             }
 
