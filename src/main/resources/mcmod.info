@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mym",
+  "name": "Move Your Mobs",
+  "description": "A pokeball-like item for moving around mobs.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Cannibalvox"],
+  "credits": "The Technic Team, Developed for Hexxit 2",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
