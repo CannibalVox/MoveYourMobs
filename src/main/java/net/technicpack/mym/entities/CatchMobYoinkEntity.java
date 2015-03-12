@@ -31,6 +31,10 @@ import net.minecraft.world.World;
 public class CatchMobYoinkEntity extends EntityItem {
     boolean catchComplete = false;
 
+    public CatchMobYoinkEntity(World world) {
+        super(world);
+    }
+
     public CatchMobYoinkEntity(World world, double x, double y, double z, ItemStack itemStack) {
         super(world, x, y, z, itemStack);
     }
@@ -47,41 +51,46 @@ public class CatchMobYoinkEntity extends EntityItem {
 
     @Override
     protected void fall(float p_70069_1_) {
-        //We've hit the ground, let's go to work!
-        EntityAnimal bestAnimal = null;
-        double bestAnimalSquaredDistance = 0;
-        for (Object entity : worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(5, 5, 5))) {
-            if (entity instanceof EntityAnimal) {
-                EntityAnimal animal = (EntityAnimal)entity;
-                double xDist = this.posX - animal.posX;
-                double yDist = this.posY - animal.posY;
-                double zDist = this.posZ - animal.posZ;
-                double distSquared = xDist*xDist+yDist*yDist+zDist*zDist;
+        if (!worldObj.isRemote) {
+            //We've hit the ground, let's go to work!
+            EntityAnimal bestAnimal = null;
+            double bestAnimalSquaredDistance = 0;
+            for (Object entity : worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(5, 5, 5))) {
+                if (entity instanceof EntityAnimal) {
+                    EntityAnimal animal = (EntityAnimal) entity;
+                    double xDist = this.posX - animal.posX;
+                    double yDist = this.posY - animal.posY;
+                    double zDist = this.posZ - animal.posZ;
+                    double distSquared = xDist * xDist + yDist * yDist + zDist * zDist;
 
-                if (bestAnimal == null || distSquared < bestAnimalSquaredDistance) {
-                    bestAnimal = animal;
-                    bestAnimalSquaredDistance = distSquared;
+                    if (bestAnimal == null || distSquared < bestAnimalSquaredDistance) {
+                        bestAnimal = animal;
+                        bestAnimalSquaredDistance = distSquared;
+                    }
                 }
             }
-        }
 
-        if (bestAnimal == null) {
+            if (bestAnimal == null) {
+                catchComplete = true;
+                return;
+            }
+
+            getEntityItem().setItemDamage(1);
+
+            NBTTagCompound rootTag = new NBTTagCompound();
+            rootTag.setString("TypeName", EntityList.getEntityString(bestAnimal));
+
+            NBTTagCompound entityData = new NBTTagCompound();
+            bestAnimal.writeEntityToNBT(entityData);
+            rootTag.setTag("EntityData", entityData);
+
+            getEntityItem().setTagCompound(rootTag);
+
+            bestAnimal.setDead();
+            ClientEffectEntity effect = new ClientEffectEntity(worldObj);
+            effect.setPosition(this.posX, this.posY, this.posZ);
+            worldObj.spawnEntityInWorld(effect);
             catchComplete = true;
-            return;
         }
-
-        getEntityItem().setItemDamage(1);
-
-        NBTTagCompound rootTag = new NBTTagCompound();
-        rootTag.setString("TypeName", EntityList.getEntityString(bestAnimal));
-
-        NBTTagCompound entityData = new NBTTagCompound();
-        bestAnimal.writeEntityToNBT(entityData);
-        rootTag.setTag("EntityData", entityData);
-
-        getEntityItem().setTagCompound(rootTag);
-
-        bestAnimal.setDead();
-        catchComplete = true;
     }
 }

@@ -22,12 +22,16 @@ package net.technicpack.mym;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.technicpack.mym.entities.CatchMobYoinkEntity;
+import net.technicpack.mym.entities.ClientEffectEntity;
+import net.technicpack.mym.entities.ReleaseMobYoinkEntity;
 import net.technicpack.mym.items.YoinkBall;
 
 @Mod(modid = MoveYourMobs.MODID, version = MoveYourMobs.VERSION)
@@ -43,5 +47,9 @@ public class MoveYourMobs
         GameRegistry.registerItem(ball, "yoinkball");
 
         GameRegistry.addRecipe(new ItemStack(ball), "XXX","AOA","XXX",'X', Items.iron_ingot,'A',Items.redstone,'O',Items.slime_ball);
+
+        EntityRegistry.registerModEntity(CatchMobYoinkEntity.class, "yoinkCatchItem", 0, MoveYourMobs.MODID, 250, 5, true);
+        EntityRegistry.registerModEntity(ReleaseMobYoinkEntity.class, "yoinkReleaseItem", 1, MoveYourMobs.MODID, 250, 5, true);
+        EntityRegistry.registerModEntity(ClientEffectEntity.class, "yoinkEffect", 2, MoveYourMobs.MODID, 250, 5, true);
     }
 }
