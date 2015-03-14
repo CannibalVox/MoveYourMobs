@@ -21,12 +21,13 @@ package net.technicpack.mym.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.technicpack.mym.MoveYourMobs;
 
 public class CatchMobYoinkEntity extends EntityItem {
     boolean catchComplete = false;
@@ -53,11 +54,11 @@ public class CatchMobYoinkEntity extends EntityItem {
     protected void fall(float p_70069_1_) {
         if (!worldObj.isRemote) {
             //We've hit the ground, let's go to work!
-            EntityAnimal bestAnimal = null;
+            EntityLiving bestAnimal = null;
             double bestAnimalSquaredDistance = 0;
             for (Object entity : worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(5, 5, 5))) {
-                if (entity instanceof EntityAnimal) {
-                    EntityAnimal animal = (EntityAnimal) entity;
+                if (entity instanceof EntityLiving && MoveYourMobs.isYoinkable((EntityLiving)entity)) {
+                    EntityLiving animal = (EntityLiving) entity;
                     double xDist = this.posX - animal.posX;
                     double yDist = this.posY - animal.posY;
                     double zDist = this.posZ - animal.posZ;

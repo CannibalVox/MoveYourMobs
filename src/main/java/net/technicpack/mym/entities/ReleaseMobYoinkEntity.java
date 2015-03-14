@@ -21,10 +21,11 @@ package net.technicpack.mym.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.technicpack.mym.MoveYourMobs;
 
 public class ReleaseMobYoinkEntity extends CatchMobYoinkEntity {
     public ReleaseMobYoinkEntity(World world) {
@@ -40,14 +41,14 @@ public class ReleaseMobYoinkEntity extends CatchMobYoinkEntity {
         if (!worldObj.isRemote) {
             Entity entity = EntityList.createEntityByName(getEntityItem().getTagCompound().getString("TypeName"), worldObj);
 
-            if (!(entity instanceof EntityAnimal)) {
+            if (!(entity instanceof EntityLiving) || !MoveYourMobs.isYoinkable((EntityLiving)entity)) {
                 //How did this happen?!
                 entity.setDead();
                 this.setDead();
                 return;
             }
             NBTTagCompound entityData = getEntityItem().getTagCompound().getCompoundTag("EntityData");
-            EntityAnimal animal = (EntityAnimal) entity;
+            EntityLiving animal = (EntityLiving) entity;
             animal.readEntityFromNBT(entityData);
             animal.setLocationAndAngles(this.posX, this.posY, this.posZ, 0, 0);
             worldObj.spawnEntityInWorld(animal);
