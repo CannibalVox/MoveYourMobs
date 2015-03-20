@@ -19,9 +19,11 @@
 
 package net.technicpack.mym.entities;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.technicpack.mym.client.LeafBurstFX;
 
 public class ClientEffectEntity extends Entity {
     int serverLife = 0;
@@ -33,17 +35,17 @@ public class ClientEffectEntity extends Entity {
     public void onUpdate() {
         if (worldObj.isRemote) {
             for (int i = 0; i < 40; i++) {
-                worldObj.spawnParticle("reddust", posX + (this.rand.nextDouble() - 0.5D) * 2,
+                LeafBurstFX fx = new LeafBurstFX(worldObj, posX + (this.rand.nextDouble() - 0.5D) * 2,
                         posY + this.rand.nextDouble() * 2,
-                        posZ + (this.rand.nextDouble() - 0.5D) * 2,
-                        0,0,0);
+                        posZ + (this.rand.nextDouble() - 0.5D) * 2);
+                Minecraft.getMinecraft().effectRenderer.addEffect(fx);
             }
 
             for (int i = 0; i < 40; i++) {
-                worldObj.spawnParticle("reddust", posX + (this.rand.nextDouble() - 0.5D),
+                LeafBurstFX fx = new LeafBurstFX(worldObj, posX + (this.rand.nextDouble() - 0.5D),
                         posY + this.rand.nextDouble(),
-                        posZ + (this.rand.nextDouble() - 0.5D),
-                        0,0,0);
+                        posZ + (this.rand.nextDouble() - 0.5D));
+                Minecraft.getMinecraft().effectRenderer.addEffect(fx);
             }
             setDead();
         } else if (serverLife++ >= 20)
