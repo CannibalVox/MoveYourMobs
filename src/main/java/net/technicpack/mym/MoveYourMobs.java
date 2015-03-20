@@ -19,11 +19,14 @@
 
 package net.technicpack.mym;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -32,7 +35,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.config.Configuration;
+import net.technicpack.mym.client.CatchMobItemRenderer;
+import net.technicpack.mym.client.DummyTrapBlock;
 import net.technicpack.mym.entities.CatchMobYoinkEntity;
 import net.technicpack.mym.entities.ClientEffectEntity;
 import net.technicpack.mym.entities.ReleaseMobYoinkEntity;
@@ -49,6 +56,9 @@ public class MoveYourMobs
 
     public static List<String> mobBlacklist = new LinkedList<String>();
     public static List<String> mobWhitelist = new LinkedList<String>();
+
+    public static Block dummyBlock;
+    public static Item yoinkball;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event)
@@ -72,14 +82,18 @@ public class MoveYourMobs
                 mobBlacklist.add(token);
         }
 
-        Item ball = new YoinkBall().setUnlocalizedName("yoinkball").setTextureName("yoinkballempty").setCreativeTab(CreativeTabs.tabTransport).setMaxStackSize(1);
-        GameRegistry.registerItem(ball, "yoinkball");
+        yoinkball = new YoinkBall().setUnlocalizedName("yoinkball").setTextureName("yoinkballempty").setCreativeTab(CreativeTabs.tabTransport).setMaxStackSize(1);
+        dummyBlock = new DummyTrapBlock(Material.rock);
+        GameRegistry.registerItem(yoinkball, "yoinkball");
+        GameRegistry.registerBlock(dummyBlock, "yoinkball-dummy");
 
-        GameRegistry.addRecipe(new ItemStack(ball), "XXX","AOA","XXX",'X', Items.iron_ingot,'A',Items.redstone,'O',Items.slime_ball);
+        GameRegistry.addRecipe(new ItemStack(yoinkball), "XXX","AOA","XXX",'X', Items.iron_ingot,'A',Items.redstone,'O',Items.slime_ball);
 
         EntityRegistry.registerModEntity(CatchMobYoinkEntity.class, "yoinkCatchItem", 0, MoveYourMobs.MODID, 250, 5, true);
         EntityRegistry.registerModEntity(ReleaseMobYoinkEntity.class, "yoinkReleaseItem", 1, MoveYourMobs.MODID, 250, 5, true);
         EntityRegistry.registerModEntity(ClientEffectEntity.class, "yoinkEffect", 2, MoveYourMobs.MODID, 250, 5, true);
+
+        MinecraftForgeClient.registerItemRenderer(yoinkball, new CatchMobItemRenderer());
     }
 
     public static boolean isYoinkable(EntityLiving entity) {
