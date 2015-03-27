@@ -64,7 +64,7 @@ public class CatchMobItemRenderer implements IItemRenderer {
                 break;
         }
         // xpos face blue
-        IIcon icon = item.getItem().getIconFromDamage(3);
+        IIcon icon = item.getItem().getIconFromDamage(2);
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
         tessellator.addVertexWithUV(1.0, 0.0, 0.0, (double)icon.getMaxU(), (double)icon.getMaxV());
         tessellator.addVertexWithUV(1.0, 1.0, 0.0, (double)icon.getMaxU(), (double)icon.getMinV());
@@ -72,7 +72,7 @@ public class CatchMobItemRenderer implements IItemRenderer {
         tessellator.addVertexWithUV(1.0, 0.0, 1.0, (double)icon.getMinU(), (double)icon.getMaxV());
 
         // xneg face purple
-        icon = item.getItem().getIconFromDamage(3);
+        icon = item.getItem().getIconFromDamage(2);
         tessellator.setNormal(-1.0F, 0.0F, 0.0F);
         tessellator.addVertexWithUV(0.0, 0.0, 1.0, (double)icon.getMaxU(), (double)icon.getMaxV());
         tessellator.addVertexWithUV(0.0, 1.0, 1.0, (double)icon.getMaxU(), (double)icon.getMinV());
@@ -80,7 +80,7 @@ public class CatchMobItemRenderer implements IItemRenderer {
         tessellator.addVertexWithUV(0.0, 0.0, 0.0, (double)icon.getMinU(), (double)icon.getMaxV());
 
         // zneg face white
-        icon = item.getItem().getIconFromDamage(3);
+        icon = item.getItem().getIconFromDamage(2);
         tessellator.setNormal(0.0F, 0.0F, -1.0F);
         tessellator.addVertexWithUV(0.0, 0.0, 0.0, (double)icon.getMaxU(), (double)icon.getMaxV());
         tessellator.addVertexWithUV(0.0, 1.0, 0.0, (double)icon.getMaxU(), (double)icon.getMinV());
@@ -88,7 +88,7 @@ public class CatchMobItemRenderer implements IItemRenderer {
         tessellator.addVertexWithUV(1.0, 0.0, 0.0, (double)icon.getMinU(), (double)icon.getMaxV());
 
         // zpos face green
-        icon = item.getItem().getIconFromDamage(3);
+        icon = item.getItem().getIconFromDamage(2);
         tessellator.setNormal(0.0F, 0.0F, -1.0F);
         tessellator.addVertexWithUV(1.0, 0.0, 1.0, (double)icon.getMaxU(), (double)icon.getMaxV());
         tessellator.addVertexWithUV(1.0, 1.0, 1.0, (double)icon.getMaxU(), (double)icon.getMinV());
@@ -96,7 +96,7 @@ public class CatchMobItemRenderer implements IItemRenderer {
         tessellator.addVertexWithUV(0.0, 0.0, 1.0, (double)icon.getMinU(), (double)icon.getMaxV());
 
         // ypos face red
-        icon = item.getItem().getIconFromDamage(2);
+        icon = item.getItem().getIconFromDamage(1);
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
         tessellator.addVertexWithUV(1.0, 1.0, 1.0, (double)icon.getMaxU(), (double)icon.getMaxV());
         tessellator.addVertexWithUV(1.0, 1.0, 0.0, (double)icon.getMaxU(), (double)icon.getMinV());

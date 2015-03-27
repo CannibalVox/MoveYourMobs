@@ -21,6 +21,7 @@ package net.technicpack.mym.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.technicpack.mym.entities.CatchMobYoinkEntity;
@@ -36,6 +38,30 @@ import net.technicpack.mym.entities.ReleaseMobYoinkEntity;
 import java.util.List;
 
 public class YoinkBall extends Item {
+
+    private IIcon mEmpty;
+    private IIcon mFullSides;
+    private IIcon mFullTop;
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister p_94581_1_) {
+        mEmpty = p_94581_1_.registerIcon("mym:yoink-nut0");
+        mFullTop = p_94581_1_.registerIcon("mym:yoink-nut1");
+        mFullSides = p_94581_1_.registerIcon("mym:yoink-nut2");
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIconFromDamage(int p_77617_1_) {
+        if (p_77617_1_ == 1)
+            return mFullTop;
+        else if (p_77617_1_ == 2)
+            return mFullSides;
+        else
+            return mEmpty;
+    }
+
     @Override
     public boolean hasCustomEntity(ItemStack stack)
     {

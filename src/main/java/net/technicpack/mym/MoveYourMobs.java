@@ -39,7 +39,6 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.config.Configuration;
 import net.technicpack.mym.client.CatchMobItemRenderer;
-import net.technicpack.mym.client.DummyTrapBlock;
 import net.technicpack.mym.entities.CatchMobYoinkEntity;
 import net.technicpack.mym.entities.ClientEffectEntity;
 import net.technicpack.mym.entities.ReleaseMobYoinkEntity;
@@ -57,7 +56,6 @@ public class MoveYourMobs
     public static List<String> mobBlacklist = new LinkedList<String>();
     public static List<String> mobWhitelist = new LinkedList<String>();
 
-    public static Block dummyBlock;
     public static Item yoinkball;
 
     @Mod.EventHandler
@@ -83,9 +81,7 @@ public class MoveYourMobs
         }
 
         yoinkball = new YoinkBall().setUnlocalizedName("yoinkball").setTextureName("yoinkballempty").setCreativeTab(CreativeTabs.tabTransport).setMaxStackSize(1);
-        dummyBlock = new DummyTrapBlock(Material.rock);
         GameRegistry.registerItem(yoinkball, "yoinkball");
-        GameRegistry.registerBlock(dummyBlock, "yoinkball-dummy");
 
         GameRegistry.addRecipe(new ItemStack(yoinkball), "XXX","AOA","XXX",'X', Items.iron_ingot,'A',Items.redstone,'O',Items.slime_ball);
 
