@@ -32,6 +32,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.technicpack.mym.client.LeafBurstFX;
 import net.technicpack.mym.entities.CatchMobYoinkEntity;
 import net.technicpack.mym.entities.ReleaseMobYoinkEntity;
 
@@ -45,10 +46,14 @@ public class YoinkBall extends Item {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerIcons(IIconRegister p_94581_1_) {
-        mEmpty = p_94581_1_.registerIcon("mym:yoink-nut0");
-        mFullTop = p_94581_1_.registerIcon("mym:yoink-nut1");
-        mFullSides = p_94581_1_.registerIcon("mym:yoink-nut2");
+    public void registerIcons(IIconRegister register) {
+        mEmpty = register.registerIcon("mym:yoink-nut0");
+        mFullTop = register.registerIcon("mym:yoink-nut1");
+        mFullSides = register.registerIcon("mym:yoink-nut2");
+        LeafBurstFX.leafIcons[0] = register.registerIcon("mym:leaf0");
+        LeafBurstFX.leafIcons[1] = register.registerIcon("mym:leaf1");
+        LeafBurstFX.leafIcons[2] = register.registerIcon("mym:leaf2");
+        LeafBurstFX.leafIcons[3] = register.registerIcon("mym:leaf3");
     }
 
     @SideOnly(Side.CLIENT)
