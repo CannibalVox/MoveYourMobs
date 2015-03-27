@@ -41,6 +41,18 @@ public class CatchMobYoinkEntity extends EntityItem {
     }
 
     @Override
+    public void writeEntityToNBT(NBTTagCompound nbt) {
+        super.writeEntityToNBT(nbt);
+        nbt.setBoolean("CatchComplete", catchComplete);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt) {
+        super.readEntityFromNBT(nbt);
+        catchComplete = nbt.getBoolean("CatchComplete");
+    }
+
+    @Override
     public void onCollideWithPlayer(EntityPlayer p_70100_1_) {
         if (!this.worldObj.isRemote) {
             if (!catchComplete) {
